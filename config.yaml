@@ -1,0 +1,515 @@
+# 日志配置
+logging:
+  level: 'INFO'
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+# 默认配置
+default:
+  symbol: 'BTCUSDT'
+  interval: '1h'
+  start_time: '2019-12-31 19:00:00'  # UTC时间
+  end_time: '2020-03-01 19:00:00'    # UTC时间 
+
+# 生成器模式配置
+generator:
+  # 指标选择模式:
+  # - single: 只计算单个指标
+  # - multiple: 计算多个指定的指标
+  # - all: 计算所有配置的指标
+  generator_mode: 'all'
+  
+  # 当generator_mode为'single'时使用
+  indicator: 'RSI'
+  
+  # 当generator_mode为'multiple'时使用
+  indicators: ['MACD', 'EMA', 'ATR']
+  
+  # 参数模式:
+  # - single: 每个指标只使用一组参数
+  # - multiple: 每个指标使用所有参数组合
+  parameter_mode: 'single'
+  
+  # 输出文件路径
+  result_path: './results.csv'
+  
+  # 是否在计算过程中打印进度信息
+  verbose: true
+  
+  # 是否使用多线程加速计算（对于大量参数组合有用）
+  use_threading: false
+  
+  # 线程数量，当use_threading为true时生效
+  thread_count: 4
+
+# 技术指标配置
+talib:
+  # Overlap Studies Functions
+  BBANDS:
+    # 默认参数，当generator_mode=single且parameter_mode=single时使用
+    default:
+      timeperiod: 20
+      nbdevup: 2.0
+      nbdevdn: 2.0
+      matype: 0
+    params_range:
+      timeperiod: 
+        start: 5
+        end: 30
+        step: 5
+      nbdevup:
+        start: 1.0
+        end: 3.0
+        step: 0.5
+      nbdevdn:
+        start: 1.0
+        end: 3.0
+        step: 0.5
+      matype: [0, 1]  # 0=SMA, 1=EMA
+
+  DEMA:
+    default:
+      timeperiod: 30
+    params_range:
+      timeperiod:
+        start: 5
+        end: 50
+        step: 5
+
+  EMA:
+    default:
+      timeperiod: 20
+    params_range:
+      timeperiod:
+        start: 5
+        end: 50
+        step: 5
+
+  HT_TRENDLINE:
+    default: {}
+    params: []
+
+  KAMA:
+    default:
+      timeperiod: 30
+    params_range:
+      timeperiod:
+        start: 10
+        end: 60
+        step: 10
+
+  MA:
+    default:
+      timeperiod: 20
+      matype: 0
+    params_range:
+      timeperiod:
+        start: 5
+        end: 60
+        step: 5
+      matype: [0, 1, 2, 3]  # 0=SMA, 1=EMA, 2=WMA, 3=DEMA
+
+  MAMA:
+    default:
+      fastlimit: 0.5
+      slowlimit: 0.05
+    params_range:
+      # fastlimit 必须 < 1 且 > slowlimit
+      fastlimit:
+        start: 0.1
+        end: 0.9
+        step: 0.1
+      # slowlimit 建议 <= 0.5，实际调用时会再次筛选 slowlimit < fastlimit
+      slowlimit:
+        start: 0.01
+        end: 0.45
+        step: 0.05
+
+  SMA:
+    default:
+      timeperiod: 20
+    params_range:
+      timeperiod:
+        start: 5
+        end: 60
+        step: 5
+
+  TEMA:
+    default:
+      timeperiod: 20
+    params_range:
+      timeperiod:
+        start: 5
+        end: 50
+        step: 5
+
+  TRIMA:
+    default:
+      timeperiod: 20
+    params_range:
+      timeperiod:
+        start: 5
+        end: 50
+        step: 5
+
+  WMA:
+    default:
+      timeperiod: 20
+    params_range:
+      timeperiod:
+        start: 5
+        end: 50
+        step: 5
+
+  # Momentum Indicator Functions
+  ADX:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 35
+        step: 7
+
+  ADXR:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 35
+        step: 7
+
+  APO:
+    default:
+      fastperiod: 12
+      slowperiod: 26
+      matype: 0
+    params_range:
+      fastperiod:
+        start: 5
+        end: 25
+        step: 5
+      slowperiod:
+        start: 20
+        end: 50
+        step: 10
+      matype: [0, 1]  # 0=SMA, 1=EMA
+
+  AROON:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  AROONOSC:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  CCI:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 10
+        end: 40
+        step: 10
+
+  CMO:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  DX:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  MACD:
+    default:
+      fastperiod: 12
+      slowperiod: 26
+      signalperiod: 9
+    params_range:
+      fastperiod:
+        start: 8
+        end: 20
+        step: 4
+      slowperiod:
+        start: 20
+        end: 40
+        step: 5
+      signalperiod:
+        start: 5
+        end: 15
+        step: 5
+
+  MFI:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  MINUS_DI:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  MINUS_DM:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  MOM:
+    default:
+      timeperiod: 10
+    params_range:
+      timeperiod:
+        start: 5
+        end: 30
+        step: 5
+
+  PLUS_DI:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  PLUS_DM:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  PPO:
+    default:
+      fastperiod: 12
+      slowperiod: 26
+      matype: 0
+    params_range:
+      fastperiod:
+        start: 8
+        end: 20
+        step: 4
+      slowperiod:
+        start: 20
+        end: 40
+        step: 5
+      matype: [0, 1]  # 0=SMA, 1=EMA
+
+  ROC:
+    default:
+      timeperiod: 10
+    params_range:
+      timeperiod:
+        start: 5
+        end: 30
+        step: 5
+
+  RSI:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  STOCH:
+    default:
+      fastk_period: 5
+      slowk_period: 3
+      slowd_period: 3
+      slowk_matype: 0
+      slowd_matype: 0
+    params_range:
+      fastk_period:
+        start: 5
+        end: 15
+        step: 5
+      slowk_period:
+        start: 3
+        end: 9
+        step: 3
+      slowd_period:
+        start: 3
+        end: 9
+        step: 3
+      slowk_matype: [0, 1]  # 0=SMA, 1=EMA
+      slowd_matype: [0, 1]  # 0=SMA, 1=EMA
+
+  STOCHRSI:
+    default:
+      timeperiod: 14
+      fastk_period: 5
+      fastd_period: 3
+      fastd_matype: 0
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+      fastk_period:
+        start: 5
+        end: 15
+        step: 5
+      fastd_period:
+        start: 3
+        end: 9
+        step: 3
+      fastd_matype: [0, 1]  # 0=SMA, 1=EMA
+
+  # Volume Indicator Functions
+  AD:
+    default: {}
+    params: []
+
+  ADOSC:
+    default:
+      fastperiod: 3
+      slowperiod: 10
+    params_range:
+      fastperiod:
+        start: 2
+        end: 8
+        step: 2
+      slowperiod:
+        start: 5
+        end: 20
+        step: 5
+
+  OBV:
+    default: {}
+    params: []
+
+  # Volatility Indicator Functions
+  ATR:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  NATR:
+    default:
+      timeperiod: 14
+    params_range:
+      timeperiod:
+        start: 7
+        end: 28
+        step: 7
+
+  # Price Transform Functions
+  AVGPRICE:
+    default: {}
+    params: []
+
+  MEDPRICE:
+    default: {}
+    params: []
+
+  TYPPRICE:
+    default: {}
+    params: []
+
+  WCLPRICE:
+    default: {}
+    params: []
+
+  # Cycle Indicator Functions
+  HT_DCPERIOD:
+    default: {}
+    params: []
+
+  HT_DCPHASE:
+    default: {}
+    params: []
+
+  HT_PHASOR:
+    default: {}
+    params: []
+
+  HT_SINE:
+    default: {}
+    params: []
+
+  # Statistical Functions
+  BETA:
+    default:
+      timeperiod: 5
+    params_range:
+      timeperiod:
+        start: 5
+        end: 30
+        step: 5
+
+  CORREL:
+    default:
+      timeperiod: 30
+    params_range:
+      timeperiod:
+        start: 10
+        end: 50
+        step: 10
+
+  STDDEV:
+    default:
+      timeperiod: 5
+      nbdev: 1.0
+    params_range:
+      timeperiod:
+        start: 5
+        end: 30
+        step: 5
+      nbdev:
+        start: 1.0
+        end: 3.0
+        step: 0.5
+
+  VAR:
+    default:
+      timeperiod: 5
+      nbdev: 1.0
+    params_range:
+      timeperiod:
+        start: 5
+        end: 30
+        step: 5
+      nbdev:
+        start: 1.0
+        end: 3.0
+        step: 0.5 

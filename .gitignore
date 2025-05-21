@@ -1,0 +1,9 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+
+# Result files
+*.csv
