@@ -6,7 +6,7 @@ logging:
 # 默认配置
 default:
   symbol: 'BTCUSDT'
-  interval: '1h'
+  interval: '5m'
   start_time: '2019-12-31 19:00:00'  # UTC时间
   end_time: '2020-03-01 19:00:00'    # UTC时间 
 
@@ -16,7 +16,7 @@ generator:
   # - single: 只计算单个指标
   # - multiple: 计算多个指定的指标
   # - all: 计算所有配置的指标
-  generator_mode: 'all'
+  generator_mode: 'multiple'
   
   # 当generator_mode为'single'时使用
   indicator: 'RSI'
@@ -27,7 +27,7 @@ generator:
   # 参数模式:
   # - single: 每个指标只使用一组参数
   # - multiple: 每个指标使用所有参数组合
-  parameter_mode: 'single'
+  parameter_mode: 'multiple'
   
   # 输出文件路径
   result_path: './results.csv'

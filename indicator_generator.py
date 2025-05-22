@@ -37,6 +37,16 @@ class TALibBatchProcessor:
         if self.verbose:
             print(f"TALibBatchProcessor 初始化完成: result_path={self.result_path}")
         
+        # 如果结果文件不存在，先写入基础 K 线数据列，避免后续缺失
+        if not os.path.exists(self.result_path):
+            try:
+                base_df = pd.DataFrame(self.data)
+                base_df.to_csv(self.result_path, index=False)
+                if self.verbose:
+                    print(f"已创建结果文件并写入基础 K 线数据列: {list(base_df.columns)[:5]} ... 共 {len(base_df.columns)} 列")
+            except Exception as e:
+                print(f"[WARN] 初始化写入基础数据失败: {e}")
+        
     def run_on_func_name(self, func_name):
         """运行指定技术指标函数，使用配置中定义的参数
         
