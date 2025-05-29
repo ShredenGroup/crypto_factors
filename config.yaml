@@ -5,10 +5,10 @@ logging:
 
 # 默认配置
 default:
-  symbol: 'BTCUSDT'
+  symbol: 'DUSDT'
   interval: '5m'
-  start_time: '2019-12-31 19:00:00'  # UTC时间
-  end_time: '2020-03-01 19:00:00'    # UTC时间 
+  start_time: '2025-05-20 19:00:00'  # UTC时间
+  end_time: '2025-05-23 19:00:00'    # UTC时间 
 
 # 生成器模式配置
 generator:
